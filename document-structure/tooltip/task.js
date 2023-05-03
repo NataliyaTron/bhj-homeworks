@@ -11,7 +11,7 @@ function makeTooltipActive(event) {
   let tooltipText = this.title;
   this.insertAdjacentHTML(
     "afterend",
-    <div class="tooltip tooltip_active">`${tooltipText}`</div>
+    '<div class="tooltip tooltip_active">`${tooltipText}`</div>'
   );
 }
 
