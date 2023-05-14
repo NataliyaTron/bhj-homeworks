@@ -1,22 +1,24 @@
 "use strict";
-const submitFile = document.getElementById("form");
-const progress = document.getElementById("progress");
-let i = 0;
 
-function submitForm(e) {
-  e.preventDefault();
+const submitFile = document.getElementById("form");
+
+form.addEventListener("submit", function (event) {
+  event.preventDefault();
   const form = new FormData(submitFile);
   const xhr = new XMLHttpRequest();
-  xhr.open("POST", "https://students.netoservices.ru/nestjs-backend/upload");
-  xhr.addEventListener("progress", loaderForm);
+
+  xhr.upload.onprogress = function (event) {
+    if (event.lengthComputable) {
+      const progressBar = document.getElementById("progress");
+      const progress = (event.loaded / event.total) * 100;
+      progressBar.value = progress / 100;
+    }
+  };
+
+  xhr.open(
+    "POST",
+    "https://students.netoservices.ru/nestjs-backend/upload",
+    true
+  );
   xhr.send(form);
-}
-
-function loaderForm() {
-  if (this.status === 200) {
-    i = i + 1;
-    progress.value = i / 20;
-  }
-}
-
-form.addEventListener("submit", submitForm);
+});
